@@ -32,7 +32,6 @@ Content-Type: application/json
   "firstName": "Joe",
   "lastName": "Johnson",
   "email": "joe.johnson@gmail.com",
-  "password": "123456",
   "photos": "joe_johnson.png",
   "roles": [
     {

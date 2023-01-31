@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.toEntity(userDto);
 
-        passwordEncoder.encode(user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // Add role to user
         if(userDto.getRoles().size() != 0){
