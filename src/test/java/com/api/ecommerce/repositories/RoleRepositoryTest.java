@@ -22,6 +22,14 @@ class RoleRepositoryTest {
     @Autowired
     private RoleRepository roleRepository;
 
+    /**
+     * insert
+     *     into
+     *         roles
+     *         (description, name)
+     *     values
+     *         (?, ?)
+     */
     @Test
     @Order(1)
     void testCreateRoleAdmin() {
