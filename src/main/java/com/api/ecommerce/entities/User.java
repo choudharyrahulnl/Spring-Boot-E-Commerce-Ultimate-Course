@@ -34,7 +34,7 @@ public class User {
     @Column(length = 64)
     private String photos;
 
-    private boolean enabled;
+    private Boolean enabled;
 
     // Unidirectional from User to Role
     @ManyToMany()
