@@ -9,10 +9,14 @@ Content-Type: application/json
   "photos": "john_doe.png",
   "roles": [
     {
-      "id": 3
+      "id": 3,
+      "name": "Editor",
+      "description": "Manage categories, brands, products, articles and menus"
     },
     {
-      "id": 4
+      "id": 4,
+      "name": "Shipper",
+      "description": "Manage categories, brands, products, articles and menus"
     }
   ]
 }
@@ -32,7 +36,9 @@ Content-Type: application/json
   "photos": "joe_johnson.png",
   "roles": [
     {
-      "id": 1
+      "id": 1,
+      "name": "Admin",
+      "description": "Manage Everything"
     }
   ]
 }
@@ -53,10 +59,14 @@ Content-Type: application/json
   "photos": "john_doe.png",
   "roles": [
     {
-      "id": 4
+      "id": 4,
+      "name": "Shipper",
+      "description": "Manage categories, brands, products, articles and menus"
     },
     {
-      "id": 5
+      "id": 5,
+      "name": "Assistant",
+      "description": "Manage questions and reviews"
     }
   ]
 }
