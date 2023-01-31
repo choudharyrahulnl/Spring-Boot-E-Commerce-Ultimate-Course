@@ -41,6 +41,13 @@ public class UserServiceImpl implements UserService {
 
         User user = userMapper.toEntity(userDto);
 
+        // Check if email already exists
+        Boolean existsByEmail = existsByEmail(user.getEmail());
+        if(existsByEmail) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        // Encode password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // Add role to user
@@ -104,4 +111,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public Boolean existsByEmail(String email) {
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        return byEmail.isPresent();
+    }
 }

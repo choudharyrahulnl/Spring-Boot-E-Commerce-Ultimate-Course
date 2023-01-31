@@ -18,4 +18,5 @@ public interface UserService {
 
     public void delete(Long id);
 
+    Boolean existsByEmail(String email);
 }

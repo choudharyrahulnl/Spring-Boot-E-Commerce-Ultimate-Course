@@ -77,3 +77,5 @@ DELETE http://localhost:8080/api/v1/users/2
 ###
 GET http://localhost:8080/api/v1/roles
 
+###
+GET http://localhost:8080/api/v1/users/existsByEmail?email=john.doe@gmail.com

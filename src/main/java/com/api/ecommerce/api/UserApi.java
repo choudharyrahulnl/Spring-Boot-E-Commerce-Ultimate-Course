@@ -45,4 +45,9 @@ public class UserApi {
         userService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/existsByEmail")
+    public ResponseEntity<Boolean> existsByEmail(@RequestParam String email) {
+        return new ResponseEntity<>(userService.existsByEmail(email), HttpStatus.OK);
+    }
 }
