@@ -10,6 +10,7 @@ import com.api.ecommerce.mappers.UserMapper;
 import com.api.ecommerce.repositories.UserRepository;
 import com.api.ecommerce.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,18 +26,22 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final RoleMapper roleMapper;
     private final UserListMapper userListMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleMapper roleMapper, UserListMapper userListMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleMapper roleMapper, UserListMapper userListMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.roleMapper = roleMapper;
         this.userListMapper = userListMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserDto save(UserDto userDto) {
 
         User user = userMapper.toEntity(userDto);
+
+        passwordEncoder.encode(user.getPassword());
 
         // Add role to user
         if(userDto.getRoles().size() != 0){
@@ -77,6 +82,9 @@ public class UserServiceImpl implements UserService {
             // Update user roles
             user.getRoles().clear();
             userDto.getRoles().forEach(roleDto -> user.addRole(roleMapper.toEntity(roleDto)));
+
+            // Update user password
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
             // Update user
             userMapper.partialUpdate(userDto, user);
