@@ -4,6 +4,7 @@ import com.api.ecommerce.dtos.UserDto;
 import com.api.ecommerce.dtos.UserListDto;
 import com.api.ecommerce.entities.Role;
 import com.api.ecommerce.entities.User;
+import com.api.ecommerce.exceptions.UserNotFoundException;
 import com.api.ecommerce.mappers.RoleMapper;
 import com.api.ecommerce.mappers.UserListMapper;
 import com.api.ecommerce.mappers.UserMapper;
@@ -64,7 +65,7 @@ public class UserServiceImpl implements UserService {
     public UserDto findById(Long id) {
         return userRepository.findById(id)
                 .map(userMapper::toDto)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Override
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
     public UserDto update(UserDto userDto) {
         // Find User
         Optional<User> byId = Optional.of(userRepository.findById(userDto.getId())
-                .orElseThrow(EntityNotFoundException::new));
+                .orElseThrow(() -> new UserNotFoundException("User not found")));
 
         // If user is not null, update user
         if (byId.isPresent()) {
