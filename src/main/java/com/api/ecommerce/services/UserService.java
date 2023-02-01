@@ -3,6 +3,7 @@ package com.api.ecommerce.services;
 import com.api.ecommerce.dtos.RoleDto;
 import com.api.ecommerce.dtos.UserDto;
 import com.api.ecommerce.dtos.UserListDto;
+import com.api.ecommerce.dtos.UserStatusDto;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface UserService {
     public void delete(Long id);
 
     Boolean existsByEmail(String email);
+
+    UserStatusDto updateStatus(UserStatusDto userStatusDto);
 }

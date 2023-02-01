@@ -2,6 +2,7 @@ package com.api.ecommerce.services.impl;
 
 import com.api.ecommerce.dtos.UserDto;
 import com.api.ecommerce.dtos.UserListDto;
+import com.api.ecommerce.dtos.UserStatusDto;
 import com.api.ecommerce.entities.Role;
 import com.api.ecommerce.entities.User;
 import com.api.ecommerce.exceptions.UserNotFoundException;
@@ -10,7 +11,6 @@ import com.api.ecommerce.mappers.UserListMapper;
 import com.api.ecommerce.mappers.UserMapper;
 import com.api.ecommerce.repositories.UserRepository;
 import com.api.ecommerce.services.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -119,4 +119,21 @@ public class UserServiceImpl implements UserService {
         Optional<User> byEmail = userRepository.findByEmail(email);
         return byEmail.isPresent();
     }
+
+    @Override
+    public UserStatusDto updateStatus(UserStatusDto userStatusDto) {
+        // Find User
+        Optional<User> byId = Optional.of(userRepository.findById(userStatusDto.getId())
+                .orElseThrow(() -> new UserNotFoundException("User not found")));
+
+        // If user is not null, update user status
+        if (byId.isPresent()) {
+            User user = byId.get();
+            user.setEnabled(userStatusDto.getEnabled());
+        }
+
+        return userStatusDto;
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.api.ecommerce.api;
 
 import com.api.ecommerce.dtos.UserDto;
 import com.api.ecommerce.dtos.UserListDto;
+import com.api.ecommerce.dtos.UserStatusDto;
 import com.api.ecommerce.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -49,5 +50,10 @@ public class UserApi {
     @GetMapping("/existsByEmail")
     public ResponseEntity<Boolean> existsByEmail(@RequestParam String email) {
         return new ResponseEntity<>(userService.existsByEmail(email), HttpStatus.OK);
+    }
+
+    @PutMapping("/update-status")
+    public ResponseEntity<UserStatusDto> updateStatus(@RequestBody UserStatusDto userStatusDto) {
+        return new ResponseEntity<>(userService.updateStatus(userStatusDto), HttpStatus.OK);
     }
 }
