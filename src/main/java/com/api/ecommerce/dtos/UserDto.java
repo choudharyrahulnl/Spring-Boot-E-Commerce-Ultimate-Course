@@ -22,7 +22,6 @@ public class UserDto implements Serializable {
     @NotNull(message = "Email is required")
     private final String email;
 
-    @NotNull(message = "Password is required")
     private final String password;
 
     private final String photos;

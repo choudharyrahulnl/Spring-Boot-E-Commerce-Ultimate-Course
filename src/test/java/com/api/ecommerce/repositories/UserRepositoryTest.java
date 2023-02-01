@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -350,6 +351,22 @@ class UserRepositoryTest {
         User savedUser = userRepository.save(user);
 
         assertThat(savedUser.getId()).isGreaterThan(0);
+    }
+
+    @Test
+    @Order(9)
+    void testExistsByEmail() {
+        String email = "john.doe@gmail.com";
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        assertThat(byEmail.isPresent()).isTrue();
+    }
+
+    @Test
+    @Order(10)
+    void testExistsByEmailFalse() {
+        String email = "john.john@gmail.com";
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        assertThat(byEmail.isPresent()).isFalse();
     }
 
 }

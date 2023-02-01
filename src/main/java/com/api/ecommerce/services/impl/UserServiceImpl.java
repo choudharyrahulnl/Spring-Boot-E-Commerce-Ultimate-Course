@@ -91,7 +91,9 @@ public class UserServiceImpl implements UserService {
             userDto.getRoles().forEach(roleDto -> user.addRole(roleMapper.toEntity(roleDto)));
 
             // Update user password
-            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
+                user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            }
 
             // Update user
             userMapper.partialUpdate(userDto, user);
