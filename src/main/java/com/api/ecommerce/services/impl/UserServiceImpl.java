@@ -121,18 +121,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserStatusDto updateStatus(UserStatusDto userStatusDto) {
+    public UserStatusDto updateStatus(Long id, Boolean status) {
         // Find User
-        Optional<User> byId = Optional.of(userRepository.findById(userStatusDto.getId())
+        Optional<User> byId = Optional.of(userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found")));
 
         // If user is not null, update user status
         if (byId.isPresent()) {
             User user = byId.get();
-            user.setEnabled(userStatusDto.getEnabled());
+            user.setEnabled(status);
         }
 
-        return userStatusDto;
+        return new UserStatusDto(id, status);
     }
 
 

@@ -21,5 +21,5 @@ public interface UserService {
 
     Boolean existsByEmail(String email);
 
-    UserStatusDto updateStatus(UserStatusDto userStatusDto);
+    UserStatusDto updateStatus(Long id, Boolean status);
 }

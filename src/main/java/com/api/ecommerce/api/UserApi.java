@@ -52,8 +52,8 @@ public class UserApi {
         return new ResponseEntity<>(userService.existsByEmail(email), HttpStatus.OK);
     }
 
-    @PutMapping("/update-status")
-    public ResponseEntity<UserStatusDto> updateStatus(@RequestBody UserStatusDto userStatusDto) {
-        return new ResponseEntity<>(userService.updateStatus(userStatusDto), HttpStatus.OK);
+    @PutMapping("/{id}/enabled/{status}")
+    public ResponseEntity<UserStatusDto> updateStatus(@PathVariable Long id, @PathVariable Boolean status) {
+        return new ResponseEntity<>(userService.updateStatus(id,status), HttpStatus.OK);
     }
 }
