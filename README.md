@@ -1,3 +1,4 @@
 # Spring-Boot-E-Commerce-Ultimate-Course
 
-Added Multipart to create user api
+Send UserList with page details like totalpages, pagenumber ...
+FOr this we need to update the dto

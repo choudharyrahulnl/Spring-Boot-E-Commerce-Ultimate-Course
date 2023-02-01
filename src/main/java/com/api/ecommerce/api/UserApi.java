@@ -58,8 +58,8 @@ public class UserApi {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserListDto>> findAll() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<UserListDto>> findAll(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return new ResponseEntity<>(userService.findAll(page,size), HttpStatus.OK);
     }
 
     @PutMapping

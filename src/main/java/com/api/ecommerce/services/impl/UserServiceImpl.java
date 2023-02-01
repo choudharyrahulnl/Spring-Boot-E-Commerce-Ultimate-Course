@@ -11,6 +11,9 @@ import com.api.ecommerce.mappers.UserListMapper;
 import com.api.ecommerce.mappers.UserMapper;
 import com.api.ecommerce.repositories.UserRepository;
 import com.api.ecommerce.services.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,8 +72,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserListDto> findAll() {
-        return userRepository.findAll()
+    public List<UserListDto> findAll(int page, int size) {
+
+        // Pageable
+        Pageable pageable = PageRequest.of(page, size);
+
+        // Get users
+        Page<User> pages = userRepository.findAll(pageable);
+        long totalElements = pages.getTotalElements();
+        int totalPages = pages.getTotalPages();
+        List<User> users = pages.getContent();
+
+        // Return users
+        return users
                 .stream()
                 .map(userListMapper::toDto)
                 .collect(Collectors.toList());

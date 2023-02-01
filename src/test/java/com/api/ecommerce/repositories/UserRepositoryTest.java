@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
@@ -367,6 +370,32 @@ class UserRepositoryTest {
         String email = "john.john@gmail.com";
         Optional<User> byEmail = userRepository.findByEmail(email);
         assertThat(byEmail.isPresent()).isFalse();
+    }
+
+
+    /**
+     *   select
+     *         u1_0.id,
+     *         u1_0.email,
+     *         u1_0.enabled,
+     *         u1_0.first_name,
+     *         u1_0.last_name,
+     *         u1_0.password,
+     *         u1_0.photos
+     *     from
+     *         users u1_0 limit ?,? 0,10
+     */
+    @Test
+    @Order(11)
+    void testUsersPagination() {
+        int pageNumber = 0;
+        int pageSize = 10;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<User> page = userRepository.findAll(pageable);
+
+        List<User> users = page.getContent();
+
+        assertThat(users.size()).isEqualTo(pageSize);
     }
 
 }
