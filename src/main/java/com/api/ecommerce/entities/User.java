@@ -38,7 +38,7 @@ public class User {
 
     // Unidirectional from User to Role
     @ManyToMany()
-    @JoinTable(name = "user_roles",
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
@@ -47,5 +47,11 @@ public class User {
         if (this.roles == null)
             this.roles = new HashSet<>();
         this.roles.add(role);
+    }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (photos == null || id == null) return null;
+        return "/user-photos/" + id + "/" + photos;
     }
 }

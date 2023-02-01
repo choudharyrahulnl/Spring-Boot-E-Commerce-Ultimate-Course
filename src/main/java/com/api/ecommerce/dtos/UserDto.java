@@ -24,9 +24,10 @@ public class UserDto implements Serializable {
 
     private final String password;
 
-    private final String photos;
+    private String photos;
 
     private final Boolean enabled = true;
 
     private final Set<RoleDto> roles;
+
 }

@@ -4,15 +4,19 @@ import com.api.ecommerce.dtos.UserDto;
 import com.api.ecommerce.dtos.UserListDto;
 import com.api.ecommerce.dtos.UserStatusDto;
 import com.api.ecommerce.services.UserService;
+import com.api.ecommerce.util.FileUploadUtil;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/v1/users")
+@Slf4j
 public class UserApi {
 
     private final UserService userService;
@@ -22,8 +26,30 @@ public class UserApi {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> save(@Valid @RequestBody UserDto userDto) {
-        return new ResponseEntity<>(userService.save(userDto), HttpStatus.CREATED);
+    public ResponseEntity<UserDto> save(@RequestPart(name = "image", required = false) MultipartFile image, @RequestPart("userDto") UserDto userDto) {
+
+        // Image Name
+        String fileName = image.getOriginalFilename();
+        if (fileName != null && !fileName.isEmpty()) {
+            userDto.setPhotos(fileName);
+        } else {
+            userDto.setPhotos("default.png");
+        }
+
+        // Save user
+        UserDto savedUser = userService.save(userDto);
+
+        // Save image
+        if (fileName != null && !fileName.isEmpty() && savedUser != null) {
+            String uploadDir = "user-photos/" + savedUser.getId();
+            try {
+                FileUploadUtil.saveFile(uploadDir, fileName, image);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
