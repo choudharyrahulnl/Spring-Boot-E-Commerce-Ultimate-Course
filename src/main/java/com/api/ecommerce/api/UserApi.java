@@ -64,8 +64,9 @@ public class UserApi {
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
             @RequestParam(value = "size", defaultValue = "10", required = false) int size,
             @RequestParam(value = "order", defaultValue = "ASC", required = false) Sort.Direction direction,
-            @RequestParam(value = "sort", defaultValue = "firstName", required = false) String sortBy) {
-        return new ResponseEntity<>(userService.findAll(page,size,direction,sortBy), HttpStatus.OK);
+            @RequestParam(value = "sort", required = false) String sortBy,
+            @RequestParam(value = "keyword", required = false) String keyword) {
+        return new ResponseEntity<>(userService.findAll(page,size,direction,sortBy, keyword), HttpStatus.OK);
     }
 
     @PutMapping

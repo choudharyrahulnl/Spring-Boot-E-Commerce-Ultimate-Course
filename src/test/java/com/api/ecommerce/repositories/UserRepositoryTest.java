@@ -398,4 +398,29 @@ class UserRepositoryTest {
         assertThat(users.size()).isEqualTo(pageSize);
     }
 
+
+    /**
+     *  select
+     *         u1_0.id,
+     *         u1_0.email,
+     *         u1_0.enabled,
+     *         u1_0.first_name,
+     *         u1_0.last_name,
+     *         u1_0.password,
+     *         u1_0.photos
+     *     from
+     *         users u1_0
+     *     where
+     *         u1_0.first_name like ?
+     *         or u1_0.last_name like ? limit ?,?
+     */
+    @Test
+    @Order(12)
+    void testKeywordSearch() {
+        String keyword = "john";
+        Page<User> users = userRepository.findAll(keyword, PageRequest.of(0, 10));
+
+        assertThat(users.getContent().size()).isGreaterThan(0);
+    }
+
 }

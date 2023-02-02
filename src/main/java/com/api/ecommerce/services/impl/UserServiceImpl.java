@@ -80,16 +80,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserListPaginationDto findAll(int page, int size, Sort.Direction direction, String sortBy) {
+    public UserListPaginationDto findAll(int page, int size, Sort.Direction direction, String sortBy, String keyword) {
 
         // Sorting
-        Sort sort = Sort.by(direction, sortBy);
+        Sort sort = null;
+        if (sortBy != null && (!sortBy.isEmpty() || !sortBy.isBlank())) {
+            sort = Sort.by(direction, sortBy);
+        }
 
-        // Pageable
-        Pageable pageable = PageRequest.of(page, size, sort);
+        // Pagination
+        Pageable pageable = null;
+        if (sort != null) {
+             pageable = PageRequest.of(page, size, sort);
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
 
         // Get users
-        Page<User> pages = userRepository.findAll(pageable);
+        Page<User> pages = null;
+        if (keyword != null && (!keyword.isEmpty() || !keyword.isBlank())) {
+            pages = userRepository.findAll(keyword,pageable);
+        } else {
+            pages = userRepository.findAll(pageable);
+        }
 
         long totalItems = pages.getTotalElements();
         int totalPages = pages.getTotalPages();
@@ -101,8 +114,7 @@ public class UserServiceImpl implements UserService {
         List<UserListDto> userListDtos = users.stream().map(user -> userListMapper.toDto(user)).collect(Collectors.toList());
 
         // Return users
-        UserListPaginationDto userListPaginationDto = userListPaginationMapper.toDto(currentPage, totalItems, totalPages, itemsPerPage, userListDtos);
-        return userListPaginationDto;
+        return userListPaginationMapper.toDto(currentPage, totalItems, totalPages, itemsPerPage, userListDtos);
     }
 
     @Override
@@ -163,16 +175,5 @@ public class UserServiceImpl implements UserService {
 
         return new UserStatusDto(id, status);
     }
-
-    private Sort.Direction getSortDirection(String direction) {
-        if (direction.equals("asc")) {
-            return Sort.Direction.ASC;
-        } else if (direction.equals("desc")) {
-            return Sort.Direction.DESC;
-        }
-
-        return Sort.Direction.ASC;
-    }
-
 
 }

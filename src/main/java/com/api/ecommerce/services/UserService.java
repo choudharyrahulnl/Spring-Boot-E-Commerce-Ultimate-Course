@@ -11,7 +11,7 @@ public interface UserService {
 
     public UserDto findById(Long id);
 
-    public UserListPaginationDto findAll(int page, int size, Sort.Direction direction, String sortBy);
+    public UserListPaginationDto findAll(int page, int size, Sort.Direction direction, String sortBy, String keyword);
 
     public UserDto update(UserDto userDto);
 
