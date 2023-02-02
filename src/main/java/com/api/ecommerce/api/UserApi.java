@@ -59,7 +59,9 @@ public class UserApi {
     }
 
     @GetMapping
-    public ResponseEntity<UserListPaginationDto> findAll(@RequestParam("page") int page, @RequestParam("size") int size) {
+    public ResponseEntity<UserListPaginationDto> findAll(
+            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
         return new ResponseEntity<>(userService.findAll(page,size), HttpStatus.OK);
     }
 
