@@ -8,6 +8,7 @@ import com.api.ecommerce.services.UserService;
 import com.api.ecommerce.util.FileUploadUtil;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,8 +62,10 @@ public class UserApi {
     @GetMapping
     public ResponseEntity<UserListPaginationDto> findAll(
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-            @RequestParam(value = "size", defaultValue = "10", required = false) int size) {
-        return new ResponseEntity<>(userService.findAll(page,size), HttpStatus.OK);
+            @RequestParam(value = "size", defaultValue = "10", required = false) int size,
+            @RequestParam(value = "order", defaultValue = "ASC", required = false) Sort.Direction direction,
+            @RequestParam(value = "sort", defaultValue = "firstName", required = false) String sortBy) {
+        return new ResponseEntity<>(userService.findAll(page,size,direction,sortBy), HttpStatus.OK);
     }
 
     @PutMapping

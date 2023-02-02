@@ -1,11 +1,9 @@
 package com.api.ecommerce.services;
 
 import com.api.ecommerce.dtos.UserDto;
-import com.api.ecommerce.dtos.UserListDto;
 import com.api.ecommerce.dtos.UserListPaginationDto;
 import com.api.ecommerce.dtos.UserStatusDto;
-
-import java.util.List;
+import org.springframework.data.domain.Sort;
 
 public interface UserService {
 
@@ -13,7 +11,7 @@ public interface UserService {
 
     public UserDto findById(Long id);
 
-    public UserListPaginationDto findAll(int page, int size);
+    public UserListPaginationDto findAll(int page, int size, Sort.Direction direction, String sortBy);
 
     public UserDto update(UserDto userDto);
 

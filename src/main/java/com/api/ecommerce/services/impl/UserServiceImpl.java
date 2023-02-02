@@ -17,10 +17,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -78,10 +80,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserListPaginationDto findAll(int page, int size) {
+    public UserListPaginationDto findAll(int page, int size, Sort.Direction direction, String sortBy) {
+
+        // Sorting
+        Sort sort = Sort.by(direction, sortBy);
 
         // Pageable
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, sort);
 
         // Get users
         Page<User> pages = userRepository.findAll(pageable);
@@ -157,6 +162,16 @@ public class UserServiceImpl implements UserService {
         }
 
         return new UserStatusDto(id, status);
+    }
+
+    private Sort.Direction getSortDirection(String direction) {
+        if (direction.equals("asc")) {
+            return Sort.Direction.ASC;
+        } else if (direction.equals("desc")) {
+            return Sort.Direction.DESC;
+        }
+
+        return Sort.Direction.ASC;
     }
 
 
