@@ -2,15 +2,18 @@ package com.api.ecommerce.services.impl;
 
 import com.api.ecommerce.dtos.UserDto;
 import com.api.ecommerce.dtos.UserListDto;
+import com.api.ecommerce.dtos.UserListPaginationDto;
 import com.api.ecommerce.dtos.UserStatusDto;
 import com.api.ecommerce.entities.Role;
 import com.api.ecommerce.entities.User;
 import com.api.ecommerce.exceptions.UserNotFoundException;
 import com.api.ecommerce.mappers.RoleMapper;
 import com.api.ecommerce.mappers.UserListMapper;
+import com.api.ecommerce.mappers.UserListPaginationMapper;
 import com.api.ecommerce.mappers.UserMapper;
 import com.api.ecommerce.repositories.UserRepository;
 import com.api.ecommerce.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,19 +27,22 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final RoleMapper roleMapper;
     private final UserListMapper userListMapper;
+    private final UserListPaginationMapper userListPaginationMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleMapper roleMapper, UserListMapper userListMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleMapper roleMapper, UserListMapper userListMapper, UserListPaginationMapper userListPaginationMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.roleMapper = roleMapper;
         this.userListMapper = userListMapper;
+        this.userListPaginationMapper = userListPaginationMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -47,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
         // Check if email already exists
         Boolean existsByEmail = existsByEmail(user.getEmail());
-        if(existsByEmail) {
+        if (existsByEmail) {
             throw new RuntimeException("Email already exists");
         }
 
@@ -55,7 +61,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         // Add role to user
-        if(userDto.getRoles().size() != 0){
+        if (userDto.getRoles().size() != 0) {
             userDto.getRoles().forEach(role -> user.addRole(roleMapper.toEntity(role)));
         } else {
             user.addRole(Role.builder().id(2L).build());
@@ -72,22 +78,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserListDto> findAll(int page, int size) {
+    public UserListPaginationDto findAll(int page, int size) {
 
         // Pageable
         Pageable pageable = PageRequest.of(page, size);
 
         // Get users
         Page<User> pages = userRepository.findAll(pageable);
-        long totalElements = pages.getTotalElements();
+
+        long totalItems = pages.getTotalElements();
         int totalPages = pages.getTotalPages();
+        int itemsPerPage = pages.getNumberOfElements();
+        int currentPage = pages.getNumber();
+
         List<User> users = pages.getContent();
 
+        List<UserListDto> userListDtos = users.stream().map(user -> userListMapper.toDto(user)).collect(Collectors.toList());
+
         // Return users
-        return users
-                .stream()
-                .map(userListMapper::toDto)
-                .collect(Collectors.toList());
+        UserListPaginationDto userListPaginationDto = userListPaginationMapper.toDto(currentPage, totalItems, totalPages, itemsPerPage, userListDtos);
+        return userListPaginationDto;
     }
 
     @Override
@@ -123,7 +133,7 @@ public class UserServiceImpl implements UserService {
         UserDto byId = findById(id);
 
         // If user is not null, delete user
-        if (byId != null){
+        if (byId != null) {
             userRepository.deleteById(id);
         }
     }

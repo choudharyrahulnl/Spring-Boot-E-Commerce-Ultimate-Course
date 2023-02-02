@@ -2,6 +2,7 @@ package com.api.ecommerce.api;
 
 import com.api.ecommerce.dtos.UserDto;
 import com.api.ecommerce.dtos.UserListDto;
+import com.api.ecommerce.dtos.UserListPaginationDto;
 import com.api.ecommerce.dtos.UserStatusDto;
 import com.api.ecommerce.services.UserService;
 import com.api.ecommerce.util.FileUploadUtil;
@@ -58,7 +59,7 @@ public class UserApi {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserListDto>> findAll(@RequestParam("page") int page, @RequestParam("size") int size) {
+    public ResponseEntity<UserListPaginationDto> findAll(@RequestParam("page") int page, @RequestParam("size") int size) {
         return new ResponseEntity<>(userService.findAll(page,size), HttpStatus.OK);
     }
 
