@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
 
     /**
@@ -24,6 +26,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
+                //.requestMatchers("/users/**").hasRole("Admin") // Enable Authorization - hasRole insert ROLE_ prefix automatically & In DB, we have to insert ROLE_ prefix
+                //.requestMatchers("/users/**").hasAnyRole("Admin") // Enable Authorization - Allow multiple roles
+                //.requestMatchers("/v1/users/**").hasAuthority("Admin") // Enable Authorization does not insert ROLE_ prefix automatically & In DB, we have to insert ROLE_ prefix
+                //.requestMatchers("/v1/users/**").hasAnyAuthority("Admin") // Enable Authorization Allow multiple roles
                 //.anyRequest().permitAll(); // Disable security
                 .anyRequest().authenticated() // Enable security
                 .and()

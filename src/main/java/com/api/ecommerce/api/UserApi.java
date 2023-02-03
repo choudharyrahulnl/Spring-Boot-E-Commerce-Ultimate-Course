@@ -12,7 +12,6 @@ import com.api.ecommerce.util.FileUploadUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Role;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,6 +71,17 @@ public class UserApi {
     }
 
 
+    /**
+     * @PreAuthorize annotation is used to check if the user has the required role to access the resource.
+     * In this case, the user must have the Admin role to access this resource.
+     *
+     * @PreAuthorize annotation checks the given expression before entering the method
+     * and if the expression evaluates to false, it throws an AccessDeniedException.
+     *
+     * @PostAuthorize annotation checks the given expression after entering the method
+     * and if the expression evaluates to false, it throws an AccessDeniedException.
+     */
+    @PreAuthorize("hasAnyAuthority('Admin')")
     @GetMapping
     public ResponseEntity<UserListPaginationDto> findAll(
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
