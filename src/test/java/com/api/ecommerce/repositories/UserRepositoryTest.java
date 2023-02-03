@@ -417,7 +417,7 @@ class UserRepositoryTest {
     @Test
     @Order(12)
     void testKeywordSearch() {
-        String keyword = "john";
+        String keyword = "ana maria";
         Page<User> users = userRepository.findAll(keyword, PageRequest.of(0, 10));
 
         assertThat(users.getContent().size()).isGreaterThan(0);
