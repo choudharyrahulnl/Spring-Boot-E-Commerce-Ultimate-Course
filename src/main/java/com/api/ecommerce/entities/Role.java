@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(of= {"id"})
 public class Role {
 
     @Id
@@ -22,4 +21,9 @@ public class Role {
 
     @Column(length = 150, nullable = false)
     private String description;
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

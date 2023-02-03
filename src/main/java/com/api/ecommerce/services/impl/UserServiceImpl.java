@@ -176,4 +176,9 @@ public class UserServiceImpl implements UserService {
         return new UserStatusDto(id, status);
     }
 
+    @Override
+    public List<UserDto> findAll() {
+        List<User> users = userRepository.findAllUsers();
+        return users.stream().map(user -> userMapper.toDto(user)).collect(Collectors.toList());
+    }
 }

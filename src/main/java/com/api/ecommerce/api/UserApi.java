@@ -1,11 +1,13 @@
 package com.api.ecommerce.api;
 
 import com.api.ecommerce.dtos.UserDto;
-import com.api.ecommerce.dtos.UserListDto;
 import com.api.ecommerce.dtos.UserListPaginationDto;
 import com.api.ecommerce.dtos.UserStatusDto;
+import com.api.ecommerce.services.CSVExporterService;
+import com.api.ecommerce.services.ExcelExporterService;
 import com.api.ecommerce.services.UserService;
 import com.api.ecommerce.util.FileUploadUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -14,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/users")
@@ -22,9 +23,13 @@ import java.util.List;
 public class UserApi {
 
     private final UserService userService;
+    private final CSVExporterService csvExporterService;
+    private final ExcelExporterService excelExporterService;
 
-    public UserApi(UserService userService) {
+    public UserApi(UserService userService, CSVExporterService csvExporterService, ExcelExporterService excelExporterService) {
         this.userService = userService;
+        this.csvExporterService = csvExporterService;
+        this.excelExporterService = excelExporterService;
     }
 
     @PostMapping
@@ -88,5 +93,17 @@ public class UserApi {
     @PutMapping("/{id}/enabled/{status}")
     public ResponseEntity<UserStatusDto> updateStatus(@PathVariable Long id, @PathVariable Boolean status) {
         return new ResponseEntity<>(userService.updateStatus(id,status), HttpStatus.OK);
+    }
+
+    @GetMapping("/export/csv")
+    public ResponseEntity<Void> exportToCSV(HttpServletResponse response) {
+        csvExporterService.exportToCSV(response);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/export/excel")
+    public ResponseEntity<Void> exportToExcel(HttpServletResponse response) {
+        excelExporterService.exportToExcel(response);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
