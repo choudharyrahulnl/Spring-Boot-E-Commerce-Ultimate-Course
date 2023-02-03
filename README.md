@@ -1,4 +1,9 @@
 # Spring-Boot-E-Commerce-Ultimate-Course
 
-Send UserList with page details like totalpages, pagenumber ...
-FOr this we need to update the dto
+User: nam@codejava.net
+Password: nam2020
+Role: Admin
+
+User: nathihsa@gmail.com
+Password: nathi2020
+Role: Editor

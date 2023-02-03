@@ -4,7 +4,9 @@ import com.api.ecommerce.dtos.UserDto;
 import com.api.ecommerce.dtos.UserListDto;
 import com.api.ecommerce.dtos.UserListPaginationDto;
 import com.api.ecommerce.dtos.UserStatusDto;
+import com.api.ecommerce.entities.User;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
@@ -26,4 +28,6 @@ public interface UserService {
     Boolean existsByEmail(String email);
 
     UserStatusDto updateStatus(Long id, Boolean status);
+
+    User getUserByEmail(String email);
 }

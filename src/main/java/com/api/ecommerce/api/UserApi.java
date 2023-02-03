@@ -3,6 +3,7 @@ package com.api.ecommerce.api;
 import com.api.ecommerce.dtos.UserDto;
 import com.api.ecommerce.dtos.UserListPaginationDto;
 import com.api.ecommerce.dtos.UserStatusDto;
+import com.api.ecommerce.security.ShopmeUserDetails;
 import com.api.ecommerce.services.CSVExporterService;
 import com.api.ecommerce.services.ExcelExporterService;
 import com.api.ecommerce.services.PdfExporterService;
@@ -11,9 +12,12 @@ import com.api.ecommerce.util.FileUploadUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Role;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -67,14 +71,16 @@ public class UserApi {
         return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 
+
     @GetMapping
     public ResponseEntity<UserListPaginationDto> findAll(
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
             @RequestParam(value = "size", defaultValue = "10", required = false) int size,
             @RequestParam(value = "order", defaultValue = "ASC", required = false) Sort.Direction direction,
             @RequestParam(value = "sort", required = false) String sortBy,
-            @RequestParam(value = "keyword", required = false) String keyword) {
-        return new ResponseEntity<>(userService.findAll(page,size,direction,sortBy, keyword), HttpStatus.OK);
+            @RequestParam(value = "keyword", required = false) String keyword, @AuthenticationPrincipal ShopmeUserDetails userDetails) {
+        log.info("User: {}", userDetails);
+        return new ResponseEntity<>(userService.findAll(page, size, direction, sortBy, keyword), HttpStatus.OK);
     }
 
     @PutMapping
@@ -95,7 +101,7 @@ public class UserApi {
 
     @PutMapping("/{id}/enabled/{status}")
     public ResponseEntity<UserStatusDto> updateStatus(@PathVariable Long id, @PathVariable Boolean status) {
-        return new ResponseEntity<>(userService.updateStatus(id,status), HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateStatus(id, status), HttpStatus.OK);
     }
 
     @GetMapping("/export/csv")
