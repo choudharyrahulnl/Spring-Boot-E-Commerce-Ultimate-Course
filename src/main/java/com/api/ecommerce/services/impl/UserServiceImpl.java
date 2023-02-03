@@ -178,7 +178,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> findAll() {
-        List<User> users = userRepository.findAllUsers();
+        List<User> users = userRepository.findAll(Sort.by(Sort.Direction.ASC, "firstName"));
         return users.stream().map(user -> userMapper.toDto(user)).collect(Collectors.toList());
     }
 }

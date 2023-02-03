@@ -45,7 +45,7 @@ public class PdfExporterServiceImpl extends AbstractExporter implements PdfExpor
 
             PdfPTable table = new PdfPTable(6);
             table.setWidthPercentage(100f);
-            table.setWidths(new float[]{1.2f, 3.5f, 3.0f, 3.0f, 3.0f, 1.7f});
+            table.setWidths(new float[]{1.2f, 2.5f, 2.5f, 5.0f, 3.5f, 1.5f});
             table.setSpacingBefore(10);
 
             writeTableHeader(table);
