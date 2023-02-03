@@ -5,6 +5,7 @@ import com.api.ecommerce.dtos.UserListPaginationDto;
 import com.api.ecommerce.dtos.UserStatusDto;
 import com.api.ecommerce.services.CSVExporterService;
 import com.api.ecommerce.services.ExcelExporterService;
+import com.api.ecommerce.services.PdfExporterService;
 import com.api.ecommerce.services.UserService;
 import com.api.ecommerce.util.FileUploadUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,11 +26,13 @@ public class UserApi {
     private final UserService userService;
     private final CSVExporterService csvExporterService;
     private final ExcelExporterService excelExporterService;
+    private final PdfExporterService pdfExporterService;
 
-    public UserApi(UserService userService, CSVExporterService csvExporterService, ExcelExporterService excelExporterService) {
+    public UserApi(UserService userService, CSVExporterService csvExporterService, ExcelExporterService excelExporterService, PdfExporterService pdfExporterService) {
         this.userService = userService;
         this.csvExporterService = csvExporterService;
         this.excelExporterService = excelExporterService;
+        this.pdfExporterService = pdfExporterService;
     }
 
     @PostMapping
@@ -104,6 +107,12 @@ public class UserApi {
     @GetMapping("/export/excel")
     public ResponseEntity<Void> exportToExcel(HttpServletResponse response) {
         excelExporterService.exportToExcel(response);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/export/pdf")
+    public ResponseEntity<Void> exportToPdf(HttpServletResponse response) {
+        pdfExporterService.exportToPdf(response);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
