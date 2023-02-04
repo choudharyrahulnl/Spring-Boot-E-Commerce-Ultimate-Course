@@ -1,4 +1,4 @@
-package com.api.ecommerce.entities;
+package com.api.ecommerce.entities.users;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,7 +34,7 @@ public class User {
     @Column(length = 64)
     private String photos;
 
-    private Boolean enabled;
+    private boolean enabled;
 
     // Unidirectional from User to Role
     @ManyToMany(fetch = FetchType.EAGER)

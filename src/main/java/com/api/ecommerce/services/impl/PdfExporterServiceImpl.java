@@ -67,7 +67,7 @@ public class PdfExporterServiceImpl extends AbstractExporter implements PdfExpor
             table.addCell(user.getLastName());
             table.addCell(user.getEmail());
             table.addCell(user.getRoles().toString());
-            table.addCell(String.valueOf(user.getEnabled()));
+            table.addCell(String.valueOf(user.isEnabled()));
         });
     }
 

@@ -1,5 +1,6 @@
 package com.api.ecommerce.dtos;
 
+import com.api.ecommerce.entities.users.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -7,7 +8,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * A DTO for the {@link com.api.ecommerce.entities.User} entity
+ * A DTO for the {@link User} entity
  */
 @Data
 public class UserDto implements Serializable {
@@ -26,7 +27,7 @@ public class UserDto implements Serializable {
 
     private String photos;
 
-    private final Boolean enabled = true;
+    private final boolean enabled = true;
 
     private final Set<RoleDto> roles;
 

@@ -1,12 +1,10 @@
 package com.api.ecommerce.services;
 
 import com.api.ecommerce.dtos.UserDto;
-import com.api.ecommerce.dtos.UserListDto;
 import com.api.ecommerce.dtos.UserListPaginationDto;
 import com.api.ecommerce.dtos.UserStatusDto;
-import com.api.ecommerce.entities.User;
+import com.api.ecommerce.entities.users.User;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 

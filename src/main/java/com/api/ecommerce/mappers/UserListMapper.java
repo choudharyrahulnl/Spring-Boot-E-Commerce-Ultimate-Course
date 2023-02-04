@@ -2,7 +2,7 @@ package com.api.ecommerce.mappers;
 
 import com.api.ecommerce.dtos.UserDto;
 import com.api.ecommerce.dtos.UserListDto;
-import com.api.ecommerce.entities.User;
+import com.api.ecommerce.entities.users.User;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")

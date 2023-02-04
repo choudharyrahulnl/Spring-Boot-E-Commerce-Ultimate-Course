@@ -1,7 +1,7 @@
 package com.api.ecommerce.security;
 
-import com.api.ecommerce.entities.Role;
-import com.api.ecommerce.entities.User;
+import com.api.ecommerce.entities.users.Role;
+import com.api.ecommerce.entities.users.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -61,7 +61,7 @@ public class ShopmeUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.getEnabled();
+        return user.isEnabled();
     }
 
     public String getFullName() {

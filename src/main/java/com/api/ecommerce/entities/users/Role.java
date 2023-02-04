@@ -1,4 +1,4 @@
-package com.api.ecommerce.entities;
+package com.api.ecommerce.entities.users;
 
 import jakarta.persistence.*;
 import lombok.*;

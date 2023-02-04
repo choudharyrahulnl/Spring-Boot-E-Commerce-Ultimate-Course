@@ -1,6 +1,6 @@
 package com.api.ecommerce.security;
 
-import com.api.ecommerce.entities.User;
+import com.api.ecommerce.entities.users.User;
 import com.api.ecommerce.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

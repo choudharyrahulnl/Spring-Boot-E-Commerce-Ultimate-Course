@@ -3,12 +3,11 @@ package com.api.ecommerce.mappers;
 import com.api.ecommerce.dtos.UserDto;
 import com.api.ecommerce.dtos.UserListDto;
 import com.api.ecommerce.dtos.UserListPaginationDto;
-import com.api.ecommerce.entities.User;
+import com.api.ecommerce.entities.users.User;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface UserListPaginationMapper {

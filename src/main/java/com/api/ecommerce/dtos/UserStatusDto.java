@@ -1,18 +1,17 @@
 package com.api.ecommerce.dtos;
 
-import jakarta.validation.constraints.NotNull;
+import com.api.ecommerce.entities.users.User;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Set;
 
 /**
- * A DTO for the {@link com.api.ecommerce.entities.User} entity
+ * A DTO for the {@link User} entity
  */
 @Data
 public class UserStatusDto implements Serializable {
     private final Long id;
 
-    private final Boolean enabled;
+    private final boolean enabled;
 
 }

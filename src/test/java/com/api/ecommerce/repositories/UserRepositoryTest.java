@@ -1,7 +1,7 @@
 package com.api.ecommerce.repositories;
 
-import com.api.ecommerce.entities.Role;
-import com.api.ecommerce.entities.User;
+import com.api.ecommerce.entities.users.Role;
+import com.api.ecommerce.entities.users.User;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

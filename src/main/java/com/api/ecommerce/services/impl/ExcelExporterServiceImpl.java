@@ -98,7 +98,7 @@ public class ExcelExporterServiceImpl extends AbstractExporter implements ExcelE
             createCell(row, columnIndex++, userDto.getFirstName(), cellStyle);
             createCell(row, columnIndex++, userDto.getLastName(), cellStyle);
             createCell(row, columnIndex++, userDto.getRoles().toString(), cellStyle);
-            createCell(row, columnIndex++, userDto.getEnabled(), cellStyle);
+            createCell(row, columnIndex++, userDto.isEnabled(), cellStyle);
         }
     }
 }

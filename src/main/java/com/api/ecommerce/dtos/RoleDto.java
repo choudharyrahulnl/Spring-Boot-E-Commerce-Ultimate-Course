@@ -1,12 +1,12 @@
 package com.api.ecommerce.dtos;
 
+import com.api.ecommerce.entities.users.Role;
 import lombok.Data;
-import lombok.ToString;
 
 import java.io.Serializable;
 
 /**
- * A DTO for the {@link com.api.ecommerce.entities.Role} entity
+ * A DTO for the {@link Role} entity
  */
 @Data
 public class RoleDto implements Serializable {
