@@ -1,5 +1,6 @@
 package com.api.ecommerce.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+@Slf4j
 public class FileUploadUtil {
 
     public static void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
@@ -40,12 +42,12 @@ public class FileUploadUtil {
                                 try {
                                     Files.delete(file);
                                 } catch (IOException e) {
-                                    e.printStackTrace();
+                                    log.error("Could not delete file: " + file);
                                 }
                             }
                         });
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("Could not list directory: " + dirPath);
             }
         }
     }
