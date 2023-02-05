@@ -23,11 +23,11 @@ public class ExcelExporterServiceImpl extends AbstractExporter implements ExcelE
 
     public ExcelExporterServiceImpl(UserService userService) {
         this.userService = userService;
-        this.workbook = new XSSFWorkbook();
     }
 
     @Override
     public void exportToExcel(HttpServletResponse response) {
+        workbook = new XSSFWorkbook();
         super.setResponseHeader(response, "xlsx", "application/octet-stream");
 
         writeHeaderLine();
