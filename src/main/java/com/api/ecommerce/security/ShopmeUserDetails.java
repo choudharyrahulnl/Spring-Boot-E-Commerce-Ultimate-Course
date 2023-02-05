@@ -1,7 +1,7 @@
 package com.api.ecommerce.security;
 
-import com.api.ecommerce.entities.users.Role;
-import com.api.ecommerce.entities.users.User;
+import com.api.ecommerce.entities.user.Role;
+import com.api.ecommerce.entities.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
