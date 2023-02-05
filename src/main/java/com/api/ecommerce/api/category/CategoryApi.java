@@ -32,9 +32,9 @@ public class CategoryApi {
         return new ResponseEntity<>(categoryService.save(categoryDto), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAnyAuthority('Editor','Admin')")
-    @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> findById(@PathVariable Long id) {
-        return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
-    }
+//    @PreAuthorize("hasAnyAuthority('Editor','Admin')")
+//    @GetMapping("/{id}")
+//    public ResponseEntity<CategoryDto> findById(@PathVariable Long id) {
+//        return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
+//    }
 }

@@ -29,7 +29,7 @@ public class Category {
     private String image;
 
     @Column(name = "enabled", nullable = false)
-    private Boolean enabled;
+    private boolean enabled;
 
     @OneToOne
     @JoinColumn(name = "parent_id")

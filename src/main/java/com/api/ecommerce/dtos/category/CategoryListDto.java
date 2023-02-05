@@ -14,6 +14,6 @@ public class CategoryListDto implements Serializable {
     private final String name;
     private final String alias;
     private final String image;
-    private final Boolean enabled;
+    private final boolean enabled;
 
 }

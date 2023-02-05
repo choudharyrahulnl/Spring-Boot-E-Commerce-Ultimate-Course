@@ -11,4 +11,6 @@ public interface CategoryService {
     List<CategoryListDto> findAll();
 
     CategoryDto findById(Long id);
+
+    List<CategoryDto> listAllCategories();
 }
