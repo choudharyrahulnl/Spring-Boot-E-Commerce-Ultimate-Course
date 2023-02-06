@@ -29,7 +29,9 @@ public class CategoryApi {
     @PreAuthorize("hasAnyAuthority('Editor','Admin')")
     @PostMapping
     public ResponseEntity<CategoryDto> save(@RequestBody CategoryDto categoryDto) {
-        return new ResponseEntity<>(categoryService.save(categoryDto), HttpStatus.CREATED);
+        CategoryDto savedCategory = categoryService.save(categoryDto);
+        // TODO: Save image
+        return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAnyAuthority('Editor','Admin')")
